@@ -1,5 +1,4 @@
 language: generic
-sudo: required
 services:
   - docker
 
@@ -8,3 +7,4 @@ before_install:
 
 script:
   - run -e CI=true rozdolsky33/docker-react-app npm run test
+os: linux
