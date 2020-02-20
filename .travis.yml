@@ -1,0 +1,24 @@
+language: node_js
+node_js:
+  - "13.7.0"
+services:
+  - docker
+
+before_install:
+  - docker build -t rozdolsky33/docker-react-app -f Dockerfile.dev .
+
+script:
+  - docker run -e CI=true rozdolsky33/docker-react-app npm test
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "docker-react"
+  env: "DockerReact-env"
+  bucket_name: "elasticbeanstalk-us-east-1-651261648885" #S3 Bucket
+  bucket_path: "docker-react"
+  on:
+    branch: master
+  access_key_id: "$AWS_ACCESS_KEY"
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
